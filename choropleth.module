@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Adds choropleth functionality to Leafleft maps.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function choropleth_menu() {
+  $items = array();
+
+  $items['admin/choropleth/usstates_geojson'] = array(
+    'page callback' => 'choropleth_usstates_geojson',
+    'access arguments' => array('access content'),
+    'file' => 'choropleth.inc'
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_init().
+ */
+function choropleth_init() {
+  $module_path = drupal_get_path('module', 'choropleth');
+  drupal_add_js($module_path . '/choropleth.js');
+
+  $settings = array(
+    'choropleth' => array(
+      'enable' => TRUE,
+      'statesData' => json_decode(file_get_contents(__DIR__ .
+        '/states_geojson.json')),
+    ),
+  );
+  drupal_add_js($settings, 'setting');
+  drupal_add_css( $module_path . '/choropleth.css');
+}

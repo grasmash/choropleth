@@ -1,0 +1,5 @@
+name = Choropleth
+description = Adds choropleth functionality to Leafleft maps.
+core = 7.x
+
+dependencies[] = recline
